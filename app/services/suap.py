@@ -5,10 +5,11 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.chrome.options import Options
 from typing import List
 from app.suap.config import SuapConfig
+from app.schemas.refeicoes_schema import Refeicao
 
 class Suap:
     URL = SuapConfig.URL
-    
+
     def __init__(self):
         self.__driver = self.__create_driver()
 
@@ -25,12 +26,13 @@ class Suap:
 
     def fechar(self) -> None:
         self.__driver.quit()
-
-    def buscar_elemento_por_class_name(self, valule : str) -> WebElement:
-        return self.__driver.find_element(By.CLASS_NAME, valule)
     
-    def buscar_elementos_por_class_name(self, valule : str) -> List[WebElement]:
-        return self.__driver.find_elements(By.CLASS_NAME, valule)
+    def buscar_todas_refeicoes(self) -> List[WebElement]:
+        return self.__driver.find_elements(By.CLASS_NAME, SuapConfig.CLASSNAME_CARD_REFEICOES)
+
+    def buscar_refeicao(self, refeicao : Refeicao) -> WebElement:
+        ref = self.__driver.find_elements(By.CLASS_NAME, SuapConfig.CLASSNAME_CARD_REFEICOES)[refeicao]
+        return ref
 
     def save_screenshot(self, filename: str) -> WebDriver:
         return self.__driver.save_screenshot(filename)
