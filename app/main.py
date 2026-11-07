@@ -3,7 +3,8 @@ from app.schemas.refeicoes_schema import Refeicao
 
 suap = Suap()
 suap.acessar_pagina()
-elemento = suap.buscar_refeicao(Refeicao.JANTAR)
-print(elemento.text)
+suap.login()
+suap.acessar_painel_de_refeicoes()
+suap.save_screenshot("screenshot.png")
 
 suap.fechar()
