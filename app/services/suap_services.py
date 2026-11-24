@@ -17,12 +17,13 @@ class Services:
 #    return self.__driver.find_elements(By.CLASS_NAME, SuapConfig.CLASSNAME_CARD_REFEICOES)[refeicao]
 
  #def ler_almoco (self, refeicao: Refeicao) -> WebElement:
-   # almoco_do_dia = self._driver.find_elements(By.CLASS_NAME,'card').text
+   # almoco_do_dia = self._driver.find_elements(By.CLASS_NAME,'card')
  #   print(almoco_do_dia.text)
 
  def ler_todas_as_refeicoes (self, refeicao: Refeicao) -> WebElement:
     almoco_do_dia = self._driver.find_elements(By.CLASS_NAME,'card')
     for elements in almoco_do_dia:
      print(elements.text)
+     #
 
 
