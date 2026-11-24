@@ -9,6 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from app.schemas.refeicoes_schema import Refeicao
 from app.suap.config import SuapConfig
+import time
+import random
 
 class Suap:
     URL = SuapConfig.URL
@@ -20,10 +22,6 @@ class Suap:
 
     def __create_driver(self) -> webdriver.Chrome:
         options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--window-size=1920,1080")
-
         return webdriver.Chrome(options=options)
 
 
@@ -46,9 +44,13 @@ class Suap:
     def login(self):
         user = self.espera.until(EC.visibility_of_element_located((By.ID, "id_username")))
         user.send_keys(SuapConfig.MATRICULA)
+        time_sleep = random.randint(1,4)
+        time.sleep(time_sleep)
 
         senha = self.__driver.find_element(By.ID, "id_password")
         senha.send_keys(SuapConfig.SENHA)
+        time_sleep = random.randint(1,4)
+        time.sleep(time_sleep)
 
         comfirmar = self.espera.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn.success")))
         comfirmar.click()
