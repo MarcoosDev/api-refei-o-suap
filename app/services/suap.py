@@ -1,14 +1,13 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.chrome.options import Options
-from typing import List
 from app.suap.config import SuapConfig
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from app.schemas.refeicoes_schema import Refeicao
 from app.suap.config import SuapConfig
+from app.services.suap_services import Services
 import time
 import random
 
@@ -17,7 +16,8 @@ class Suap:
 
     def __init__(self):
         self.__driver = self.__create_driver()
-        self.espera = WebDriverWait(self.__driver, 15)
+        self.espera = WebDriverWait(self.__driver, 30)
+        self.suap_service = Services(self.__driver)
 
 
     def __create_driver(self) -> webdriver.Chrome:
@@ -33,13 +33,6 @@ class Suap:
         self.__driver.quit()
 
     
-    def buscar_todas_refeicoes(self) -> List[WebElement]:
-        return self.__driver.find_elements(By.CLASS_NAME, SuapConfig.CLASSNAME_CARD_REFEICOES)
-
-
-    def buscar_refeicao(self, refeicao : Refeicao) -> WebElement:
-        return self.__driver.find_elements(By.CLASS_NAME, SuapConfig.CLASSNAME_CARD_REFEICOES)[refeicao]
-
 
     def login(self):
         user = self.espera.until(EC.visibility_of_element_located((By.ID, "id_username")))
@@ -67,3 +60,4 @@ class Suap:
 
     def save_screenshot(self, filename: str) -> WebDriver:
         return self.__driver.save_screenshot(filename)
+
